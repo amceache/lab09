@@ -8,61 +8,68 @@
 
 int main() {
 	// adjacency matrix
-	std::vector<std::vector<bool>> Graph;
+	std::vector<std::vector<bool> > Graph (2);
+	// vector of edges
 	std::vector<char> edges;
 	std::string line, srcs, dsts;
 	char src, dst;
-	int c, edgenum, test, srci, dsti;
+	int c, edgenum, testnum;
 
 	c = std::cin.peek();
 	while ( c != EOF )
 	{
 		getline(std::cin, line);
 		edgenum = std::stoi(line);
-		std::cout << "third\n";
 		for (int i=edgenum; i > 0; i--)
 		{
-			std::vector<char>::iterator et = edges.begin();
+			
 			getline(std::cin, line);
 			std::istringstream iss(line);
 			getline(iss, srcs, ' ');
 			getline(iss, dsts, ' ');
 			src = srcs[0];
 			dst = dsts[0];
-			//srci = src[0]-'A'; // convert to ints
-			//dsti = dst[0]-'A';
-			//std::cout << i << " here " << edgenum << std::endl;
 			if (i == edgenum)
 			{
 				if (src > dst)
 				{
 					edges.push_back(dst);
 					edges.push_back(src);
+					std::cout << "here?\n";
+			//		Graph[1][0] = true;
 				} else if (src < dst) {
+					std::cout << "herem?\n";
 					edges.push_back(src);
 					edges.push_back(dst);
+			//		Graph[0][0] = true;
 				}
 			} else {
 				bool match=false;
-				//std::cout << d << " second " << srci << std::endl;
+				// iterate through edges vector
 				std::vector<char>::iterator et = edges.begin();
+				// iterate through Graph vector (vector of vectors)
+				std::vector<std::vector<bool> >::iterator gt = Graph.begin();
 				while (!match && et != edges.end())
 				{
-					std::cout << *et << " et " << src << " src\n";
 					if (src == *et){
 						match=true;
+						/*std::vector<bool>::iterator vt = gt->begin();
+						while (vt != gt->end())
+						{
+							if (dst < *vt)
+								gt->insert(vt, dst);
+						}*/
 					}
 					else if (src < *et) 
 					{
 						edges.insert(et, src);
-//						std::cout << *et << " et " << src << " src\n";
+						//std::vector<bool> entry;
 						match=true;
 					}
 					std::advance(et,1);
+					std::advance(gt,1);
 				}
-				std::cout << match << " match and " << src << "\n";
 				if (!match) {
-					std::cout << "when is this true\n";
 					edges.push_back(src);
 					
 				}
@@ -76,15 +83,19 @@ int main() {
 		}
 		std::cout << "\n";
 		getline(std::cin, line);
-		test = std::stoi(line);
-		for (int i=test; i > 0; i--)
+		testnum = std::stoi(line);
+		for (int i=testnum; i > 0; i--)
 		{
 			getline(std::cin, line);
 			std::istringstream iss(line);
 			getline(iss, srcs, ' ');
 			getline(iss, dsts, ' ');
 		}
+
+		// set up for next graph
+		edges.clear();
 		getline(std::cin, line); // should just be whitespace
+		// check to see if this is the end of the file
 		c = std::cin.peek();
 		
 	}
