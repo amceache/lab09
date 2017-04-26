@@ -19,6 +19,7 @@ int main() {
 	{
 		getline(std::cin, line);
 		edgenum = std::stoi(line);
+		std::cout << "third\n";
 		for (int i=edgenum; i > 0; i--)
 		{
 			std::vector<char>::iterator et = edges.begin();
@@ -47,19 +48,21 @@ int main() {
 				std::vector<char>::iterator et = edges.begin();
 				while (!match && et != edges.end())
 				{
+					std::cout << *et << " et " << src << " src\n";
 					if (src == *et){
-						std::cout << *et << "hit this\n";
 						match=true;
 					}
-					else if (src > *et) 
+					else if (src < *et) 
 					{
 						edges.insert(et, src);
-						std::cout << *et << "um" << std::endl;
+//						std::cout << *et << " et " << src << " src\n";
 						match=true;
 					}
 					std::advance(et,1);
 				}
+				std::cout << match << " match and " << src << "\n";
 				if (!match) {
+					std::cout << "when is this true\n";
 					edges.push_back(src);
 					
 				}
